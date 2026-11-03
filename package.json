@@ -1,0 +1,9 @@
+{
+  "name":"leeway-digital-brain-diagnostics-pkg",
+  "version":"0.1.0",
+  "private":true,
+  "type":"module",
+  "description":"Standalone device diagnostic and consent plan staging, not a native installer",
+  "scripts":{"test":"node --test","diagnose":"node packages/diagnostics/bin/diagnose.mjs"},
+  "engines":{"node":">=20"}
+}
