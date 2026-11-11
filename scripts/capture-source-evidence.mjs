@@ -74,6 +74,8 @@ export async function captureSourceEvidence() {
   const context={
     repository:process.env.GITHUB_REPOSITORY||null,
     commit:process.env.GITHUB_SHA||null,
+    sourceHeadCommit:process.env.LEEWAY_CI_SOURCE_HEAD_SHA||process.env.GITHUB_SHA||null,
+    sourceIdentityKind:process.env.GITHUB_EVENT_NAME==='pull_request'?'HEAD_SHA_PLUS_TEST_MERGE_SHA':'PUSH_COMMIT_SHA',
     runId:process.env.GITHUB_RUN_ID||null,
     runAttempt:process.env.GITHUB_RUN_ATTEMPT||null,
     workflow:process.env.GITHUB_WORKFLOW||null,

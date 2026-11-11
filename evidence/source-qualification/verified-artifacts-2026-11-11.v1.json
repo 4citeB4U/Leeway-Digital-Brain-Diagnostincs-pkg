@@ -1,0 +1,151 @@
+{
+  "schema": "leeway.source-artifact-integrity-index.v1",
+  "purpose": "Preserve source test results and check artifact-byte integrity, without claiming independent Veritas or Receipt Authority admission",
+  "owner": "4citeB4U/Leeway-Digital-Brain-Diagnostincs-pkg",
+  "workId": "LEEWAY-DIGITAL-BRAIN-DIAGNOSTICS-PR1",
+  "reviewedSourceHead": "a9b774697a7f4a5c13d5d32aa206264e6678dd15",
+  "method": "Download each original GitHub Actions artifact ZIP through GitHub connector; compare local ZIP SHA-256 to GitHub artifact metadata digest; extract source-evidence.json and confirm local SHA-256 equals bundled source-evidence.sha256; inspect test outcome and diagnostics state",
+  "distinctTestDefinitions": 17,
+  "repeatedTestExecutions": 102,
+  "artifacts": [
+    {
+      "runId": 43116270476,
+      "event": "pull_request",
+      "os": "ubuntu-24.04",
+      "artifactId": 13899325463,
+      "zipBytes": 1774,
+      "checkoutCommit": "7cb1a72ad5c958bc4dc61d2917caaca7cbeba7ce",
+      "sourceHeadCommit": "a9b774697a7f4a5c13d5d32aa206264e6678dd15",
+      "testTotals": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0
+      },
+      "diagnostics": "SOURCE_DIAGNOSTICS_PASS",
+      "sha256": {
+        "evidenceJson": "2820a3a5577313cbc8a9d0b3b1d9fd12b66f5a0c0ba5afdfb001581dfcd52cb0",
+        "downloadedZip": "9b516b89bbb4715725226f394ad9dd0a9213c98a41de7c9eb4f89eae655cc162",
+        "zipEqualsGitHubDigest": true,
+        "jsonEqualsBundledHash": true
+      }
+    },
+    {
+      "runId": 43116270476,
+      "event": "pull_request",
+      "os": "windows-2022",
+      "artifactId": 13897914198,
+      "zipBytes": 1779,
+      "checkoutCommit": "7cb1a72ad5c958bc4dc61d2917caaca7cbeba7ce",
+      "sourceHeadCommit": "a9b774697a7f4a5c13d5d32aa206264e6678dd15",
+      "testTotals": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0
+      },
+      "diagnostics": "SOURCE_DIAGNOSTICS_PASS",
+      "sha256": {
+        "evidenceJson": "b3849a58ef628301f6beda0fbba44c2e55a45acb2f569dc45279e9071aacdbad",
+        "downloadedZip": "fb94e97f9b26ea903d4ffadabf459131aa9dbe4d6cf2b355657d6982c044de2c",
+        "zipEqualsGitHubDigest": true,
+        "jsonEqualsBundledHash": true
+      }
+    },
+    {
+      "runId": 43116270476,
+      "event": "pull_request",
+      "os": "macos-15",
+      "artifactId": 13897904099,
+      "zipBytes": 1778,
+      "checkoutCommit": "7cb1a72ad5c958bc4dc61d2917caaca7cbeba7ce",
+      "sourceHeadCommit": "a9b774697a7f4a5c13d5d32aa206264e6678dd15",
+      "testTotals": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0
+      },
+      "diagnostics": "SOURCE_DIAGNOSTICS_PASS",
+      "sha256": {
+        "evidenceJson": "321dd6addf7d35596cf43823d4841b32565f312c8d5317b0ae4c91debbd74339",
+        "downloadedZip": "0648a8e9c2233dc8b410d6e615f821e1ce86c7a9c951cff7bef629046758f07c",
+        "zipEqualsGitHubDigest": true,
+        "jsonEqualsBundledHash": true
+      }
+    },
+    {
+      "runId": 43116261133,
+      "event": "push",
+      "os": "ubuntu-24.04",
+      "artifactId": 13898936126,
+      "zipBytes": 1771,
+      "checkoutCommit": "a9b774697a7f4a5c13d5d32aa206264e6678dd15",
+      "sourceHeadCommit": "a9b774697a7f4a5c13d5d32aa206264e6678dd15",
+      "testTotals": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0
+      },
+      "diagnostics": "SOURCE_DIAGNOSTICS_PASS",
+      "sha256": {
+        "evidenceJson": "c3bd2bd3dfe4374148e12c2bd600099d4e59e74d1af2518ff5d7582f5a11a571",
+        "downloadedZip": "171d7572e13ea114f921918f0006aeb040597f2ac86f25707ceef567e6f4377d",
+        "zipEqualsGitHubDigest": true,
+        "jsonEqualsBundledHash": true
+      }
+    },
+    {
+      "runId": 43116261133,
+      "event": "push",
+      "os": "windows-2022",
+      "artifactId": 13897688779,
+      "zipBytes": 1770,
+      "checkoutCommit": "a9b774697a7f4a5c13d5d32aa206264e6678dd15",
+      "sourceHeadCommit": "a9b774697a7f4a5c13d5d32aa206264e6678dd15",
+      "testTotals": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0
+      },
+      "diagnostics": "SOURCE_DIAGNOSTICS_PASS",
+      "sha256": {
+        "evidenceJson": "453ca8f60460ba398cafdbd0640bfe59225b1abebcc0f651e5da07db858f2bb6",
+        "downloadedZip": "cb1cd4d6bbb0de43a3884b38d6675f06d17010ed346284b461a59466674e1e84",
+        "zipEqualsGitHubDigest": true,
+        "jsonEqualsBundledHash": true
+      }
+    },
+    {
+      "runId": 43116261133,
+      "event": "push",
+      "os": "macos-15",
+      "artifactId": 13897624655,
+      "zipBytes": 1773,
+      "checkoutCommit": "a9b774697a7f4a5c13d5d32aa206264e6678dd15",
+      "sourceHeadCommit": "a9b774697a7f4a5c13d5d32aa206264e6678dd15",
+      "testTotals": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0
+      },
+      "diagnostics": "SOURCE_DIAGNOSTICS_PASS",
+      "sha256": {
+        "evidenceJson": "06249fb0dd5a3ce6c75dd72d6e9f749866a3a48b6e5fd2f02c8214dce14ff99b",
+        "downloadedZip": "5febb4c66958d66f035645656a4010e01d184967ce8bf344ca2f7973bc4ef275",
+        "zipEqualsGitHubDigest": true,
+        "jsonEqualsBundledHash": true
+      }
+    }
+  ],
+  "custody": {
+    "githubArtifactCount": 6,
+    "localReadback": "BYTES_AND_MANIFEST_HASHES_MATCHED",
+    "independentVeritas": "NOT_SUBMITTED",
+    "receiptAuthority": "NOT_ADMITTED",
+    "learningLedger": "NOT_ADMITTED"
+  },
+  "knownLimitations": [
+    "Artifact retention is governed by GitHub and is not indefinite",
+    "Original pull_request checkout is a synthetic test merge SHA, not the source head SHA",
+    "Sandbox integrity review is not an enrolled independent LeeWay Veritas signed decision",
+    "No physical device, storage transport, owner-path indexing, native installer, receipt append/readback or Learning admission tested"
+  ]
+}

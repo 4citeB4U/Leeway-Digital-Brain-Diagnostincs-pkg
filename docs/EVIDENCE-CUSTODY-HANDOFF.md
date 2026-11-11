@@ -36,3 +36,10 @@ Independent Veritas review host and approved signer are unobserved from this cli
 ## Evidence recovery
 
 Original historical work is **preserved as source evidence**, not retroactively certified. Future CI tests produce actual candidate artifacts; production custody requires the above approved provider and signed/readback evidence. If any stage is denied, preserve denial and resume at the original gate.
+## Source identity precision (2026-11-11 amendment)
+
+GitHub `pull_request` workflows normally check out a generated test-merge commit, while the actual proposed source is `pull_request.head.sha`. Archive **both**: `context.commit` records the evaluated checkout, and `context.sourceHeadCommit` records the source branch commit. They must not be silently conflated. On `push` both values are the same. No CI runner SHA is an independent host attestation.
+
+## First working artifact readback
+
+[PR CI 43116270476](https://github.com/4citeB4U/Leeway-Digital-Brain-Diagnostincs-pkg/actions/runs/43116270476) and [push CI 43116261133](https://github.com/4citeB4U/Leeway-Digital-Brain-Diagnostincs-pkg/actions/runs/43116261133) each passed three OS source jobs plus a read-only artifact-index job. Six ZIP artifacts were downloaded and checked in an isolated sandbox: ZIP SHA-256 matched GitHub's artifact digest and extracted JSON SHA-256 matched each bundled `source-evidence.sha256`. The six records each report 17/17 source tests and Diagnostics smoke PASS. See [artifact integrity index](../evidence/source-qualification/verified-artifacts-2026-11-11.v1.json). These are source-only results and retained GitHub artifacts, **not** production Receipt/Veritas admission.

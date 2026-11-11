@@ -29,6 +29,8 @@ jobs:
         with:
           node-version: '22'
       - name: Run source tests and capture sanitized diagnostics evidence
+        env:
+          LEEWAY_CI_SOURCE_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: node scripts/capture-source-evidence.mjs
       - name: Upload source evidence candidate even on failure
         if: always()
@@ -67,7 +69,8 @@ jobs:
             const runUrl='https://github.com/'+owner+'/'+repo+'/actions/runs/'+context.runId;
             const lines=[
               'Original run: '+runUrl,
-              'Source commit: '+context.sha,
+              'Checked-out commit (may be a PR test-merge SHA): '+context.sha,
+              'Head source commit: '+(context.payload.pull_request?.head?.sha||context.sha),
               'Runner jobs: '+jobs.length+'; successful: '+jobs.filter(x=>x.conclusion==='success').length,
               'Evidence artifacts: '+artifacts.length+' (expected 3)',
               'Original artifact bytes have NOT been independently read back; Receipt and Veritas remain unqualified.'
