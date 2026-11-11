@@ -1,0 +1,2 @@
+# Local CI source evidence candidates; never commit private host metadata
+.local-evidence/

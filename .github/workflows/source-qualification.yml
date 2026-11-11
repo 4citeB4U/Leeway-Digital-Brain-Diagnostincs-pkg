@@ -1,13 +1,13 @@
 # LEEWAY HEADER — DO NOT REMOVE
 # REGION: LEEWAY.DIGITAL_BRAIN.CI
-# TAG: LEEWAY.DIGITAL_BRAIN.CROSS_PLATFORM_SOURCE_TEST_V1
-# WHAT: Execute read-only Diagnostics and Brain authorization source tests on three OS runners.
-# WHY: Prevent permission regressions before any native installer work.
-# WHO: LeeWay package maintainers and GitHub Actions.
+# TAG: LEEWAY.DIGITAL_BRAIN.CI_EVIDENCE_CAPTURE_V2
+# WHO: LeeWay package maintainers and GitHub Actions
+# WHAT: Test source and capture uploadable, hash-bound evidence on every run.
+# WHEN: Pull requests and pushes to the owning branches.
 # WHERE: .github/workflows/source-qualification.yml
-# WHEN: 2026-11-11
-# HOW: Node v22 and deterministic test/CLI smoke without credentials or deployment.
-# LICENSE: MIT (candidate package workflow).
+# WHY: Preserve pass and failure evidence instead of orphaned test outputs.
+# HOW: One Node runner per OS, bounded evidence JSON + hash, always-upload, PR source pointer.
+# LICENSE: MIT (package CI, not receipt or Veritas authority).
 name: Source qualification
 on:
   pull_request:
@@ -28,7 +28,44 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run source regression tests
-        run: npm test
-      - name: Run local-only OS facts collector
-        run: npm run diagnose
+      - name: Run source tests and capture sanitized diagnostics evidence
+        run: node scripts/capture-source-evidence.mjs
+      - name: Upload source evidence candidate even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: leeway-source-evidence-${{ matrix.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .local-evidence/
+          if-no-files-found: error
+          retention-days: 90
+  evidence-index:
+    needs: source-test
+    if: always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+      issues: write
+    steps:
+      - name: Persist source run pointer on owning PR; never claim Veritas or Receipt
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {owner,repo}=context.repo;
+            const runs=await github.paginate(github.rest.actions.listJobsForWorkflowRun,{owner,repo,run_id:context.runId,per_page:100});
+            const jobs=runs.filter(x=>x.name&&x.name.startsWith('source-test ('));
+            const allPassed=jobs.length===3&&jobs.every(x=>x.conclusion==='success');
+            const marker='<!-- LEEWAY_SOURCE_EVIDENCE_RUN_'+context.runId+'_ATTEMPT_'+process.env.GITHUB_RUN_ATTEMPT+' -->';
+            const previous=await github.paginate(github.rest.issues.listComments,{owner,repo,issue_number:context.issue.number,per_page:100});
+            if(previous.some(x=>x.body&&x.body.includes(marker)))return;
+            const runUrl='https://github.com/'+owner+'/'+repo+'/actions/runs/'+context.runId;
+            const jobLines=jobs.map(x=>'- '+x.name+': '+String(x.conclusion||'UNVERIFIED')+' ('+x.html_url+')').join('\n');
+            const body=marker+'\n### Automatic LeeWay source evidence pointer\n'+
+              '**Classification:** '+(allPassed?'SOURCE_TEST_PASS':'SOURCE_TEST_FAIL_OR_INCOMPLETE')+
+              '; **not independent Veritas; not a canonical Receipt**.\n'+
+              '**Commit:** '+context.sha+'\n'+
+              '**Original run:** '+runUrl+'\n'+
+              '**Runner jobs:**\n'+(jobLines||'- No qualifying jobs returned')+'\n'+
+              'The workflow uploads sanitized result JSON and SHA-256 as per-run artifacts (subject to retention). '+ 
+              'Independent Veritas review, Receipt custody/readback, and Learning Ledger admission require the authorized provider; no approval is inferred.\n';
+            await github.rest.issues.createComment({owner,repo,issue_number:context.issue.number,body});

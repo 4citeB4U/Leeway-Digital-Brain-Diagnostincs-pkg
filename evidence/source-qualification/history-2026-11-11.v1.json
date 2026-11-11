@@ -1,0 +1,110 @@
+{
+  "schema": "leeway.source-evidence-candidate.v1",
+  "classification": "SOURCE_TEST_PASS_ONLY",
+  "owner": "4citeB4U/Leeway-Digital-Brain-Diagnostincs-pkg",
+  "workId": "LEEWAY-DIGITAL-BRAIN-DIAGNOSTICS-PR1",
+  "originalMission": "Diagnostics-first, consent-gated Digital Brain and canonical Continuum integration",
+  "sourceCommit": "8580e3d53cc14fddc43b941597fba071f3241f0c",
+  "captureMethod": "Read GitHub Actions jobs and decoded GitHub job logs with GitHub connector; compute SHA-256 of UTF-8 decoded contents; do not modify original logs",
+  "sources": "https://github.com/4citeB4U/Leeway-Digital-Brain-Diagnostincs-pkg/pull/1",
+  "totalJobs": 6,
+  "repeatedTestExecutions": 84,
+  "distinctTestDefinitions": 14,
+  "runArtifactsObserved": 0,
+  "runs": [
+    {
+      "runId": 43113465479,
+      "runUrl": "https://github.com/4citeB4U/Leeway-Digital-Brain-Diagnostincs-pkg/actions/runs/43113465479",
+      "jobs": [
+        {
+          "jobId": 130835276060,
+          "os": "macos-15",
+          "testCount": 14,
+          "pass": 14,
+          "fail": 0,
+          "logSha256": "6273ba28d09e52a6e4a2e89728b436145f8e9fbe472e2d393b7f2a1171947586",
+          "logUtf8Bytes": 19565
+        },
+        {
+          "jobId": 130835276391,
+          "os": "windows-2022",
+          "testCount": 14,
+          "pass": 14,
+          "fail": 0,
+          "logSha256": "f8d2b0900cbdedf8b6dfcbeff0844c22556a8399d5f1a2e5f954150ed944c96a",
+          "logUtf8Bytes": 19964
+        },
+        {
+          "jobId": 130835276426,
+          "os": "ubuntu-24.04",
+          "testCount": 14,
+          "pass": 14,
+          "fail": 0,
+          "logSha256": "4d839fcdf11213077bcdacc5801801284126fc18c1a8cce12447776cb9cab357",
+          "logUtf8Bytes": 20049
+        }
+      ]
+    },
+    {
+      "runId": 43113465314,
+      "runUrl": "https://github.com/4citeB4U/Leeway-Digital-Brain-Diagnostincs-pkg/actions/runs/43113465314",
+      "jobs": [
+        {
+          "jobId": 130835275376,
+          "os": "windows-2022",
+          "testCount": 14,
+          "pass": 14,
+          "fail": 0,
+          "logSha256": "d4ab5c65d9a50e20fe821cf94d02a870ef58f768ad99b90d562b125cdd1c1fd2",
+          "logUtf8Bytes": 19131
+        },
+        {
+          "jobId": 130835275767,
+          "os": "macos-15",
+          "testCount": 14,
+          "pass": 14,
+          "fail": 0,
+          "logSha256": "f6efb408587d519f4678e5ed96c46a2c3445c7f67257f747e1c5b33ecb684431",
+          "logUtf8Bytes": 19806
+        },
+        {
+          "jobId": 130835275788,
+          "os": "ubuntu-24.04",
+          "testCount": 14,
+          "pass": 14,
+          "fail": 0,
+          "logSha256": "9df3e0e539cdaae89a04bbd03fed380f899ab2b988ffa72f5ea5152dd966be8d",
+          "logUtf8Bytes": 19233
+        }
+      ]
+    }
+  ],
+  "eachJobConclusions": {
+    "workflow": "success",
+    "sourceTestsStep": "success",
+    "diagnosticsSmokeStep": "success"
+  },
+  "artifactBoundary": {
+    "historicalGithubArtifactCount": 0,
+    "logHashesCover": "decoded job-log UTF-8 text, not GitHub ZIP bundles",
+    "originalJobUrlsRetained": true
+  },
+  "receiptAuthority": {
+    "status": "NOT_ADMITTED",
+    "receiptId": null,
+    "canonicalCustodian": "existing tenant-scoped Receipt Authority runtime"
+  },
+  "independentVeritas": {
+    "status": "NOT_SUBMITTED",
+    "signedDecision": null
+  },
+  "learningLedger": {
+    "status": "NOT_ADMITTED"
+  },
+  "limitations": [
+    "These are original source-scope CI results, not native-device tests",
+    "Job log availability is subject to GitHub retention",
+    "No production Veritas PRE/POST, canonical Receipt readback or Learning admission has been observed",
+    "No original raw device facts are included"
+  ]
+}
