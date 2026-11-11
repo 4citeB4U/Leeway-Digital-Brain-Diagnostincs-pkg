@@ -1,0 +1,34 @@
+# LEEWAY HEADER — DO NOT REMOVE
+# REGION: LEEWAY.DIGITAL_BRAIN.CI
+# TAG: LEEWAY.DIGITAL_BRAIN.CROSS_PLATFORM_SOURCE_TEST_V1
+# WHAT: Execute read-only Diagnostics and Brain authorization source tests on three OS runners.
+# WHY: Prevent permission regressions before any native installer work.
+# WHO: LeeWay package maintainers and GitHub Actions.
+# WHERE: .github/workflows/source-qualification.yml
+# WHEN: 2026-11-11
+# HOW: Node v22 and deterministic test/CLI smoke without credentials or deployment.
+# LICENSE: MIT (candidate package workflow).
+name: Source qualification
+on:
+  pull_request:
+  push:
+    branches: [main, feat/diagnostics-first-permission-gates]
+permissions:
+  contents: read
+jobs:
+  source-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022, macos-15]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run source regression tests
+        run: npm test
+      - name: Run local-only OS facts collector
+        run: npm run diagnose
