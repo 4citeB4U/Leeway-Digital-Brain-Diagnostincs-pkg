@@ -6,7 +6,7 @@
 # WHEN: Pull requests and pushes to the owning branches.
 # WHERE: .github/workflows/source-qualification.yml
 # WHY: Preserve pass and failure evidence instead of orphaned test outputs.
-# HOW: One Node runner per OS, bounded evidence JSON + hash, always-upload, PR source pointer.
+# HOW: One Node runner per OS, bounded evidence JSON + hash, always-upload, read-only artifact-index readback.
 # LICENSE: MIT (package CI, not receipt or Veritas authority).
 name: Source qualification
 on:
@@ -36,36 +36,42 @@ jobs:
         with:
           name: leeway-source-evidence-${{ matrix.os }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: .local-evidence/
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 90
   evidence-index:
     needs: source-test
-    if: always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    if: always()
     runs-on: ubuntu-24.04
     permissions:
       contents: read
       actions: read
-      issues: write
     steps:
-      - name: Persist source run pointer on owning PR; never claim Veritas or Receipt
+      - name: Read back artifact metadata and fail if custody is incomplete
         uses: actions/github-script@v7
         with:
           script: |
             const {owner,repo}=context.repo;
-            const runs=await github.paginate(github.rest.actions.listJobsForWorkflowRun,{owner,repo,run_id:context.runId,per_page:100});
-            const jobs=runs.filter(x=>x.name&&x.name.startsWith('source-test ('));
-            const allPassed=jobs.length===3&&jobs.every(x=>x.conclusion==='success');
-            const marker='<!-- LEEWAY_SOURCE_EVIDENCE_RUN_'+context.runId+'_ATTEMPT_'+process.env.GITHUB_RUN_ATTEMPT+' -->';
-            const previous=await github.paginate(github.rest.issues.listComments,{owner,repo,issue_number:context.issue.number,per_page:100});
-            if(previous.some(x=>x.body&&x.body.includes(marker)))return;
+            const result=await github.rest.actions.listJobsForWorkflowRun({owner,repo,run_id:context.runId,per_page:100});
+            const jobs=result.data.jobs.filter(x=>x.name&&x.name.startsWith('source-test ('));
+            let artifacts=[];
+            for(let attempt=0;attempt<5;attempt++){
+              const result=await github.rest.actions.listWorkflowRunArtifacts({owner,repo,run_id:context.runId,per_page:100});
+              artifacts=result.data.artifacts.filter(x=>x.name&&x.name.startsWith('leeway-source-evidence-'));
+              if(artifacts.length>=3)break;
+              await new Promise(resolve=>setTimeout(resolve,1500));
+            }
+            const jobsPassed=jobs.length===3&&jobs.every(x=>x.conclusion==='success');
+            const artifactsPresent=artifacts.length===3&&artifacts.every(x=>x.size_in_bytes>0&&!x.expired);
+            const classification=jobsPassed&&artifactsPresent?'SOURCE_EVIDENCE_ARTIFACT_INDEXED':'SOURCE_EVIDENCE_CUSTODY_INCOMPLETE';
             const runUrl='https://github.com/'+owner+'/'+repo+'/actions/runs/'+context.runId;
-            const jobLines=jobs.map(x=>'- '+x.name+': '+String(x.conclusion||'UNVERIFIED')+' ('+x.html_url+')').join('\n');
-            const body=marker+'\n### Automatic LeeWay source evidence pointer\n'+
-              '**Classification:** '+(allPassed?'SOURCE_TEST_PASS':'SOURCE_TEST_FAIL_OR_INCOMPLETE')+
-              '; **not independent Veritas; not a canonical Receipt**.\n'+
-              '**Commit:** '+context.sha+'\n'+
-              '**Original run:** '+runUrl+'\n'+
-              '**Runner jobs:**\n'+(jobLines||'- No qualifying jobs returned')+'\n'+
-              'The workflow uploads sanitized result JSON and SHA-256 as per-run artifacts (subject to retention). '+ 
-              'Independent Veritas review, Receipt custody/readback, and Learning Ledger admission require the authorized provider; no approval is inferred.\n';
-            await github.rest.issues.createComment({owner,repo,issue_number:context.issue.number,body});
+            const lines=[
+              'Original run: '+runUrl,
+              'Source commit: '+context.sha,
+              'Runner jobs: '+jobs.length+'; successful: '+jobs.filter(x=>x.conclusion==='success').length,
+              'Evidence artifacts: '+artifacts.length+' (expected 3)',
+              'Original artifact bytes have NOT been independently read back; Receipt and Veritas remain unqualified.'
+            ];
+            await core.summary.addHeading('LeeWay source evidence: '+classification)
+              .addRaw(lines.join('\n\n')).write();
+            if(!jobsPassed||!artifactsPresent)core.setFailed(classification);

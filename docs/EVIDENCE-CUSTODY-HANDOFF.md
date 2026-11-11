@@ -16,7 +16,7 @@ Historical CI source evidence for exact commit `8580e3d53cc14fddc43b941597fba071
 
 ## Continuous test evidence acquisition
 
-The `Source qualification` GitHub workflow runs the original Node test suite and read-only `collectDiagnostics()` smoke on Linux, Windows and macOS. Every matrix job writes `.local-evidence/source-evidence.json` and `.sha256` (including failures), then uploads an artifact even when tests fail; GitHub PR runs also add a sanitized idempotent source-evidence pointer to PR #1. No user files, private hostnames, raw OS facts, or credentials belong in this public source evidence.
+The `Source qualification` GitHub workflow runs the original Node test suite and read-only `collectDiagnostics()` smoke on Linux, Windows and macOS. Every matrix job writes `.local-evidence/source-evidence.json` and `.sha256` (including failures), then uploads an artifact even when tests fail; a read-only finishing job checks that three nonempty artifacts exist and records the exact run in its GitHub job summary. The workflow does not write PR comments because its GitHub Actions integration returned HTTP 403 on the original attempt. No user files, private hostnames, raw OS facts, or credentials belong in this public source evidence.
 
 The artifacts request 90-day retention and therefore remain **time-limited CI custody**, not a permanent Receipt Authority append. GitHub run URLs and PR pointers preserve discovery of source-scope results. If a run has no artifact or uploaded bytes cannot be read back, mark custody **INCOMPLETE**; do not promote it.
 
