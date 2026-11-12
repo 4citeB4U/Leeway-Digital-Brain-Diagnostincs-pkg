@@ -1,3 +1,18 @@
+<!--
+LEEWAY HEADER — DO NOT REMOVE
+REGION: LEEWAY.DEVICE.PACKAGE
+TAG: LEEWAY.DEVICE.DIAGNOSTICS.BRAIN.DISTRIBUTION
+DISCOVERY_PIPELINE: Voice → Intent → Location → Vertical → Ranking → Render
+5WH:
+WHO = Creator constitutional amendment and outside F2 source contributor; owner review required.
+WHAT = Public distribution/source boundary for device-exclusive Brain and Diagnostics packages.
+WHEN = 2026-11-11, device attachment amendment to existing PR #1.
+WHERE = README.md, 4citeB4U/Leeway-Digital-Brain-Diagnostincs-pkg.
+HOW = Preserve original product description; add the device-specific exception and verified source contract.
+WHY = Let each machine retain its own native intelligence without imposing local paths on portable LeeWay services.
+LICENSE: New package terms declared MIT; upstream component licenses independently controlled.
+AUTHORITY: Documentation/source candidate only; no native device enrollment.
+-->
 # LeeWay Digital Brain + Diagnostics Package
 
 REGION: LEEWAY.DEVICE.PACKAGE | TAG: DISTRIBUTION.CANONICAL.V0

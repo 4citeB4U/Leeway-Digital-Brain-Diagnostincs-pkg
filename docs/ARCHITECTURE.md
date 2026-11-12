@@ -1,3 +1,18 @@
+<!--
+LEEWAY HEADER — DO NOT REMOVE
+REGION: LEEWAY.DEVICE.PACKAGE.CONTRACT
+TAG: LEEWAY.DEVICE.DIAGNOSTICS.BRAIN.ACCEPTANCE
+DISCOVERY_PIPELINE: Voice → Intent → Location → Vertical → Ranking → Render
+5WH:
+WHO = Creator and device-native package maintainers; outside F2 source contribution under owner review.
+WHAT = Preserve diagnostics-first permissions, native device exception and installation acceptance boundaries.
+WHEN = 2026-11-11, device-exclusive constitutional clarification.
+WHERE = docs/ARCHITECTURE.md, Digital Brain + Diagnostics source package.
+HOW = Read-only OS facts, device-native identity/paths, explicit consent and independent release gates.
+WHY = Prevent cross-device state leakage and false native indexing or sensor claims.
+LICENSE: New package docs under package terms; upstream rights unmodified.
+AUTHORITY: Source acceptance contract, not runtime permission, Veritas or Receipt.
+-->
 # Diagnostics-first acceptance contract
 
 **Creator's machine-exclusive exception:** [Device-exclusive constitutional contract](DEVICE-EXCLUSIVE-CONSTITUTIONAL-EXCEPTION.md) binds both installed products to their own physical device, its native paths and measured capabilities; the rest of LeeWay remains hardware agnostic. A device-local identity or path is not a permit to scan, a global machine identity or a substitute for human/OS authorization. Source guard: packages/device/src/device-locality.mjs (candidate only).
