@@ -1,5 +1,7 @@
 # Diagnostics-first acceptance contract
 
+**Creator's machine-exclusive exception:** [Device-exclusive constitutional contract](DEVICE-EXCLUSIVE-CONSTITUTIONAL-EXCEPTION.md) binds both installed products to their own physical device, its native paths and measured capabilities; the rest of LeeWay remains hardware agnostic. A device-local identity or path is not a permit to scan, a global machine identity or a substitute for human/OS authorization. Source guard: packages/device/src/device-locality.mjs (candidate only).
+
 REGION: LEEWAY.PACKAGE.CONTRACT | TAG: DIAGNOSTICS_BRAIN_CONTINUUM.V0
 WHO: Authorized product maintainer | WHAT: Product stages and access governance
 WHEN: Prior to device onboarding | WHERE: Device-local package

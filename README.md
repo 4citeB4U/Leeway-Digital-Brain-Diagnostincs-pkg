@@ -8,6 +8,10 @@ WHY: Ship device-local products without cloning the existing Runtime Fabric, Bra
 HOW: Permission-gated local adapters, independently verified release artifacts, and a public download portal
 LICENSE: MIT (new package files only; upstream licensing must be independently checked)
 
+## Constitutional ownership exception
+
+**Digital Brain and Diagnostics are dedicated exclusively to the physical device on which each instance is installed.** Their runtime identity, native paths, optional local index and hardware/permission observations are device-local and not a portable LeeWay/user-wide profile. LeeWay remains the software creator; no new filesystem or device grant follows from device dedication. All other LeeWay ecosystem authority and runtime components remain hardware-agnostic. See [device-exclusive constitutional contract](docs/DEVICE-EXCLUSIVE-CONSTITUTIONAL-EXCEPTION.md). A source-only [locality validator](packages/device/src/device-locality.mjs) checks structural device/path boundaries without pretending to attest real hardware or grant access.
+
 ## Product boundary
 
 1. **Diagnostics first.** Read-only, limited device discovery, no directory traversal or file-content access. Capability and permission findings are explicit.
